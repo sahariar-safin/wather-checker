@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Wather Checker</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="cityInput" type="text" class="form-control" placeholder="Enter a location for Weather ...">
+                <div class="input-group-append">
+                    <button onclick="handleSearch()" id="search" type="button" class="btn btn-danger">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id="icone" src="" alt="">
+            <h1 id="city"></h1>
+            <h3><span id="temparet"></span>&deg;C</h3>
+            <h1 id="wather" class="lead"></h1>
+        </div>
+    </div>
+
+    <script>
+
+        fetch('https://api.openweathermap.org/data/2.5/weather?q=dhaka&appid=59c6d79585ff085d6b5e09bccdd1725b')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById('wather').innerHTML = data.weather[0].main;
+                document.getElementById('city').innerHTML = data.name;
+                document.getElementById('temparet').innerHTML = data.main.temp;
+                document.getElementById('icone').src = 'https://openweathermap.org/img/wn/' + data.weather[0].icon + '.png'
+            })
+        function handleSearch() {
+            const searchInput = document.getElementById("cityInput");
+            const cityName = searchInput.value;
+            fetch('https://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&appid=59c6d79585ff085d6b5e09bccdd1725b')
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    document.getElementById('wather').innerHTML = data.weather[0].main;
+                    document.getElementById('city').innerHTML = data.name;
+                    document.getElementById('temparet').innerHTML = data.main.temp;
+                    document.getElementById('icone').src = 'https://openweathermap.org/img/wn/' + data.weather[0].icon + '.png'
+                })
+        }
+    </script>
+</body>
+
+</html>
